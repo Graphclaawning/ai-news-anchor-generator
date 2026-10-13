@@ -1,0 +1,1 @@
+"""Platform adapters — the only place the outside world is touched."""
