@@ -1,0 +1,65 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ai-news-anchor-generator"
+version = "0.4.2"
+description = "Generate a personalized AI news anchor broadcast from any feed."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "ai-news-anchor-generator contributors" }]
+keywords = ["news", "tts", "llm", "anchor", "broadcast", "personalization"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Multimedia :: Sound/Audio :: Speech",
+]
+
+dependencies = [
+  "pydantic>=2.7,<3",
+  "pydantic-settings>=2.3,<3",
+  "typer>=0.12,<1",
+  "rich>=13.7,<14",
+  "httpx>=0.27,<1",
+  "feedparser>=6.0,<7",
+  "beautifulsoup4>=4.12,<5",
+  "PyYAML>=6.0,<7",
+  "numpy>=1.26,<3",
+]
+
+[project.optional-dependencies]
+tts-piper = ["piper-tts>=1.2,<2"]
+tts-azure = ["azure-cognitiveservices-speech>=1.38,<2"]
+llm-openai = ["openai>=1.35,<2"]
+llm-local = ["llama-cpp-python>=0.2.80,<1"]
+dev = [
+  "pytest>=8.2,<9",
+  "pytest-asyncio>=0.23,<1",
+  "ruff>=0.6,<1",
+  "mypy>=1.11,<2",
+]
+
+[project.scripts]
+ai-news-anchor = "ai_news_anchor.bootstrap.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ai_news_anchor"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "UP", "B", "SIM", "RUF"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+files = ["src"]
+warn_unreachable = true
